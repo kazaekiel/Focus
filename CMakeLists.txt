@@ -28,6 +28,7 @@ qt_add_qml_module(appFocus
         SOURCES src/utils/casters.h src/utils/casters.cpp
         QML_FILES qml/Configuration.qml
         QML_FILES qml/TimerPage.qml
+        QML_FILES qml/Param.qml
 )
 
 target_include_directories(appFocus PRIVATE

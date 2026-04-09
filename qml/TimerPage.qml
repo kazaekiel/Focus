@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Page {
+    id: timerPage
     property int routineStep: Math.floor(timerViewModel.routineCurrentIndex / 2) + 1
 
     ColumnLayout{
@@ -20,7 +21,7 @@ Page {
             Button{
                 text: "Settings"
                 Layout.rightMargin: 10
-                onClicked: StackView.view.push(configurationPage)
+                onClicked: timerPage.StackView.view.push(configurationPage)
             }
 
             Component{
