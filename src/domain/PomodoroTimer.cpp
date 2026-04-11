@@ -11,32 +11,7 @@ PomodoroTimer::PomodoroTimer(unsigned int ft, unsigned int sbt, unsigned int lbt
     nbr_of_cycle_(nc)
 {
 
-    Session session;
-    for(int i = 0; i < nbr_of_cycle_ - 1; i++){
-        session.running_status = Running_Status::Idle;
-        /*if(i%2==0){
-            session.initial_time = ft;
-            session.type = Type::Focus;
-        }else{
-            session.initial_time = sbt;
-            session.type = Type::Short_Break;
-        } */
-        session.initial_time = ft;
-        session.type = Type::Focus;
-        routine_.push_back(session);
-
-        session.initial_time = sbt;
-        session.type = Type::Short_Break;
-        routine_.push_back(session);
-    }
-
-    session.initial_time = ft;
-    session.type = Type::Focus;
-    routine_.push_back(session);
-
-    session.initial_time = lbt;
-    session.type = Type::Long_Break;
-    routine_.push_back(session);
+    createRoutine(ft, sbt, lbt, nc);
 
 }
 
@@ -87,6 +62,58 @@ void PomodoroTimer::skip(){
     std::cout << "Skip timer" << std::endl;
     current_routine_index_++;
     remaining_time_ = routine_.at(current_routine_index_).initial_time*60;
+}
+
+void PomodoroTimer::updateTimer(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc){
+    clearTimer();
+
+    remaining_time_ = ft*60;
+    current_routine_index_=0;
+    nbr_of_cycle_ = nc;
+
+    createRoutine(ft, sbt, lbt, nc);
+
+}
+
+void PomodoroTimer::createRoutine(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc){
+    Session session;
+    for(int i = 0; i < nbr_of_cycle_ - 1; i++){
+        session.running_status = Running_Status::Idle;
+        /*if(i%2==0){
+            session.initial_time = ft;
+            session.type = Type::Focus;
+        }else{
+            session.initial_time = sbt;
+            session.type = Type::Short_Break;
+        } */
+        session.initial_time = ft;
+        session.type = Type::Focus;
+        routine_.push_back(session);
+
+        session.initial_time = sbt;
+        session.type = Type::Short_Break;
+        routine_.push_back(session);
+    }
+
+    session.initial_time = ft;
+    session.type = Type::Focus;
+    routine_.push_back(session);
+
+    session.initial_time = lbt;
+    session.type = Type::Long_Break;
+    routine_.push_back(session);
+}
+
+void PomodoroTimer::clearTimer(){
+    if(routine_.empty()){
+        std::cout << "WARNING: try to clear routine vector but is empty." << std::endl;
+        return;
+    }
+    routine_.clear();
+    remaining_time_ = 0;
+    current_routine_index_ = 0;
+    nbr_of_cycle_ = 0;
+
 }
 
 const std::vector<Session>& PomodoroTimer::getRoutine() const{

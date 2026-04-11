@@ -8,7 +8,7 @@ TimerViewModel::TimerViewModel(PomodoroTimer& pt, QObject* parent):
     pt_(pt){
     timer_ = new QTimer(this);
     connect(timer_, &QTimer::timeout, this, &TimerViewModel::tick);
-    connect(timer_, &QTimer::timeout, this, &TimerViewModel::update);
+    // connect(timer_, &QTimer::timeout, this, &TimerViewModel::update);
 
     //timer_->start(1000);
 
@@ -83,8 +83,10 @@ void TimerViewModel::pause(){
 void TimerViewModel::reset(){
     timer_->stop();
     pt_.reset();
+
     emit remainingTimeTextChanged();
     emit timerStatusChanged();
+    emit routineCurrentIndexChanged();
 
 }
 void TimerViewModel::skip(){
@@ -96,8 +98,12 @@ void TimerViewModel::skip(){
     emit routineCurrentIndexChanged();
 }
 
-void TimerViewModel::update(){
+void TimerViewModel::update(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc){
+    pt_.updateTimer(ft, sbt, lbt, nc);
 
+    emit remainingTimeTextChanged();
+    emit timerStatusChanged();
+    emit routineCurrentIndexChanged();
 }
 
 }// end of namespace pomodoro_timer

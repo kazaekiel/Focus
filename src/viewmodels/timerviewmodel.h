@@ -27,7 +27,7 @@ public:
     void setRoutineSize(int rs);
     void setNbrOfCycle(int nc);
 public slots:
-    void update();
+    void update(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc);
     void tick();
     void start();
     void pause();

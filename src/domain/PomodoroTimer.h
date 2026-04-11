@@ -31,6 +31,10 @@ public:
     void reset();
     void skip();
 
+    void updateTimer(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc);
+    void createRoutine(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc);
+    void clearTimer();
+
     const  std::vector<Session>& getRoutine() const;
     Session getSession(int routine_index)const;
     int get_remaining_time()const;

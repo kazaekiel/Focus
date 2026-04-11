@@ -23,6 +23,7 @@ Page {
         }
 
         Param{
+            id: focusTime
             title: "Durée de concentration (minutes)"
             description: "Temps de travail focalisé avant une pause"
             value: 25
@@ -31,6 +32,7 @@ Page {
         }
 
         Param{
+            id: shortBreakTime
             title: "Durée de pause courte (minutes)"
             description: "Petite pause entre les cycles de travail"
             value: 5
@@ -39,6 +41,7 @@ Page {
         }
 
         Param{
+            id: longBreakTime
             title: "Durée de pause longue (minutes)"
             description: "Grande pause après les cycles de travail"
             value: 15
@@ -47,11 +50,28 @@ Page {
         }
 
         Param{
+            id: nbrOfCycles
             title: "Cycles avant pause longue"
             description: "Nombre de cycles de travail avant la pause longue"
             value: 4
             from: 1
             to: 10
+        }
+
+        RowLayout{
+            Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
+            Button{
+                id: loadButton
+                text: "Enregistrer"
+                onClicked: timerViewModel.update(focusTime.value, shortBreakTime.value,
+                                                 longBreakTime.value, nbrOfCycles.value)
+            }
+            Button{
+                id: cancelButton
+                text: "Annuler"
+                onClicked: configPage.StackView.view.pop()
+            }
         }
     }
 }
