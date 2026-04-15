@@ -15,6 +15,10 @@ class TimerViewModel : public QObject
     Q_PROPERTY(int routineSize READ routineSize WRITE setRoutineSize NOTIFY routineSizeChanged FINAL)
     Q_PROPERTY(int nbrOfCycle READ nbrOfCycle WRITE setNbrOfCycle NOTIFY nbrOfCycleChanged FINAL)
     Q_PROPERTY(QString timerStatus READ timerStatus NOTIFY timerStatusChanged FINAL)
+    Q_PROPERTY(int focusTime READ focusTime  NOTIFY focusTimeChanged FINAL)
+    Q_PROPERTY(int shortBreakTime READ shortBreakTime NOTIFY shortBreakTimeChanged FINAL)
+    Q_PROPERTY(int longBreakTime READ longBreakTime  NOTIFY longBreakTimeChanged FINAL)
+
 public:
     TimerViewModel(PomodoroTimer& pt, QObject* parent = 0);
     QString remainingTimeText()const;
@@ -23,6 +27,9 @@ public:
     int routineSize()const;
     int nbrOfCycle()const;
     QString timerStatus()const;
+    int focusTime()const;
+    int shortBreakTime()const;
+    int longBreakTime()const;
 
     void setRoutineSize(int rs);
     void setNbrOfCycle(int nc);
@@ -44,6 +51,11 @@ signals:
     void routineSizeChanged();
     void timerStatusChanged();
     void nbrOfCycleChanged();
+
+    void focusTimeChanged();
+    void shortBreakTimeChanged();
+    void longBreakTimeChanged();
+
 
 };
 

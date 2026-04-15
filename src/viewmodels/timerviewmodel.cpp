@@ -58,6 +58,17 @@ QString TimerViewModel::timerStatus()const{
     return QString(timer_status.c_str());
 }
 
+int TimerViewModel::focusTime()const     {
+    return pt_.getSession(0).initial_time;
+}
+int TimerViewModel::shortBreakTime()const{
+    return pt_.getSession(1).initial_time;
+}
+int TimerViewModel::longBreakTime()const {
+    int lastIndex = pt_.getRoutine().size()-1;
+    return pt_.getSession(lastIndex).initial_time;
+}
+
 void TimerViewModel::tick(){
     pt_.tick();
     emit remainingTimeTextChanged();
@@ -87,6 +98,7 @@ void TimerViewModel::reset(){
     emit remainingTimeTextChanged();
     emit timerStatusChanged();
     emit routineCurrentIndexChanged();
+    emit typeChanged();
 
 }
 void TimerViewModel::skip(){
@@ -96,6 +108,7 @@ void TimerViewModel::skip(){
     emit remainingTimeTextChanged();
     emit timerStatusChanged();
     emit routineCurrentIndexChanged();
+    emit typeChanged();
 }
 
 void TimerViewModel::update(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc){
@@ -104,6 +117,8 @@ void TimerViewModel::update(unsigned int ft, unsigned int sbt, unsigned int lbt,
     emit remainingTimeTextChanged();
     emit timerStatusChanged();
     emit routineCurrentIndexChanged();
+    emit typeChanged();
+    emit nbrOfCycleChanged();
 }
 
 }// end of namespace pomodoro_timer
