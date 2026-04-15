@@ -18,19 +18,31 @@ PomodoroTimer::PomodoroTimer(unsigned int ft, unsigned int sbt, unsigned int lbt
 PomodoroTimer::~PomodoroTimer(){}
 
 
-void PomodoroTimer::tick(){
+// void PomodoroTimer::tick(){
+//     remaining_time_--;
+//     std::cout << "> Remaining time: " << remaining_time_ << std::endl;
+//     if(remaining_time_ <= 0){
+//         routine_.at(current_routine_index_).running_status =  Running_Status::Finished;
+//         current_routine_index_++;
+//         remaining_time_ = routine_.at(current_routine_index_).initial_time*60;
+//         if(current_routine_index_>=routine_.size()){
+//             std::cerr << "ERROR: new index > routine vector size." << std::endl;
+//             std::cout << "TODO: ici, on est logiquement à la fin de la session de travail => gérer ce cas" << std::endl;
+//             return;
+//         }
+//     }
+// }
+
+Tick_Result PomodoroTimer::tick(){
     remaining_time_--;
     std::cout << "> Remaining time: " << remaining_time_ << std::endl;
     if(remaining_time_ <= 0){
-        routine_.at(current_routine_index_).running_status =  Running_Status::Finished;
-        current_routine_index_++;
-        remaining_time_ = routine_.at(current_routine_index_).initial_time*60;
-        if(current_routine_index_>=routine_.size()){
-            std::cerr << "ERROR: new index > routine vector size." << std::endl;
-            std::cout << "TODO: ici, on est logiquement à la fin de la session de travail => gérer ce cas" << std::endl;
-            return;
+        if(current_routine_index_ == routine_.size()-1){
+            return Tick_Result::Routine_completed;
         }
+        return Tick_Result::Session_Transition;
     }
+    return Tick_Result::No_Transition;
 }
 
 void PomodoroTimer::start(){

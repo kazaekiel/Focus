@@ -70,13 +70,25 @@ int TimerViewModel::longBreakTime()const {
 }
 
 void TimerViewModel::tick(){
-    pt_.tick();
-    emit remainingTimeTextChanged();
+    Tick_Result tick_res = pt_.tick();
+    switch (tick_res) {
+    case Tick_Result::No_Transition:
+        emit remainingTimeTextChanged();
+        break;
+    case Tick_Result::Session_Transition:
+        skip();
+        start();
+        break;
+    case Tick_Result::Routine_completed:
+        reset();
+    default:
+        break;
+    }
 }
 
 
 void TimerViewModel::start(){
-    timer_->start(1000);
+    timer_->start(100);
     pt_.start();
     emit timerStatusChanged();
 }

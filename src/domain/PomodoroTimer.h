@@ -13,6 +13,11 @@ enum class Running_Status {
     Idle, Running, Paused, Finished
 };
 
+
+enum class Tick_Result{
+    No_Transition, Session_Transition, Routine_completed
+};
+
 struct Session{
     unsigned int initial_time;
     Type type;
@@ -25,7 +30,7 @@ public:
     PomodoroTimer(unsigned int ft, unsigned int sbt, unsigned int lbt, unsigned int nc);
     ~PomodoroTimer();
 
-    void tick();
+    Tick_Result tick();
     void start();
     void pause();
     void reset();
